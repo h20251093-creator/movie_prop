@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영화 소품의 진화 — 현실성과 상징성</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+:root {
+  --b00: #f0f4fa;   /* lightest bg */
+  --b01: #e2eaf6;   /* subtle surface */
+  --b10: #c5d4ed;   /* border */
+  --b20: #94aed4;   /* muted text / divider */
+  --b30: #5a7db5;   /* secondary text */
+  --b40: #2d5a9e;   /* body accent */
+  --b50: #1a3d72;   /* heading */
+  --b60: #0d2347;   /* darkest / header bg */
+  --white: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--b00);
+  color: var(--b60);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--b60);
+  color: var(--white);
+  padding: 72px 24px 64px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(45,90,158,.25) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 80% 30%, rgba(26,61,114,.3) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.header-eyebrow {
+  font-size: 10.5px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--b20);
+  margin-bottom: 22px;
+  position: relative;
+}
+
+header h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(20px, 3.5vw, 34px);
+  font-weight: 700;
+  line-height: 1.5;
+  max-width: 660px;
+  margin: 0 auto 18px;
+  position: relative;
+}
+
+header h1 mark {
+  background: none;
+  color: var(--b20);
+  border-bottom: 2px solid var(--b30);
+  padding-bottom: 1px;
+}
+
+header p {
+  font-size: 13px;
+  color: var(--b30);
+  letter-spacing: .05em;
+  position: relative;
+}
+
+/* ── LAYOUT ── */
+.wrap {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+section {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--b10);
+}
+
+/* ── SECTION LABEL ── */
+.sec-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.sec-num {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  color: var(--b30);
+  border: 1px solid var(--b10);
+  background: var(--b01);
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+
+.sec-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(16px, 2.5vw, 21px);
+  font-weight: 700;
+  color: var(--b50);
+}
+
+/* ── DEFINITION ── */
+.def-box {
+  background: var(--white);
+  border: 1px solid var(--b10);
+  border-left: 3px solid var(--b40);
+  padding: 28px 32px;
+  border-radius: 0 8px 8px 0;
+  font-size: 14.5px;
+  line-height: 1.95;
+  color: var(--b50);
+}
+
+.def-box strong {
+  color: var(--b40);
+  font-weight: 700;
+}
+
+/* ── ROLE GRID ── */
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--b10);
+  border: 1px solid var(--b10);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 24px;
+}
+
+@media (max-width: 600px) { .role-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.role-item {
+  background: var(--white);
+  padding: 26px 16px;
+  text-align: center;
+  transition: background .2s;
+}
+
+.role-item:hover { background: var(--b01); }
+
+.role-icon { font-size: 26px; margin-bottom: 10px; display: block; }
+
+.role-name {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--b50);
+  margin-bottom: 6px;
+}
+
+.role-desc { font-size: 12px; color: var(--b30); line-height: 1.6; }
+
+/* ── TABLE ── */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--b10);
+  border-radius: 10px;
+  background: var(--white);
+  box-shadow: 0 2px 12px rgba(13,35,71,.06);
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+
+thead tr { background: var(--b50); color: var(--white); }
+
+thead th {
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+tbody tr { border-bottom: 1px solid var(--b01); transition: background .15s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--b00); }
+
+tbody td {
+  padding: 14px 20px;
+  vertical-align: top;
+  line-height: 1.65;
+}
+
+tbody td:first-child {
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--b20);
+  white-space: nowrap;
+  width: 110px;
+}
+
+.td-old { color: var(--b20); }
+.td-new { color: var(--b50); font-weight: 500; }
+
+/* ── AXIS ── */
+.axis-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 560px) { .axis-wrap { grid-template-columns: 1fr; } }
+
+.axis-card {
+  background: var(--white);
+  border: 1px solid var(--b10);
+  border-radius: 10px;
+  padding: 28px 24px;
+  box-shadow: 0 2px 12px rgba(13,35,71,.05);
+}
+
+.axis-card.dark {
+  background: var(--b50);
+  border-color: var(--b50);
+}
+
+.axis-top {
+  border-top: 3px solid var(--b40);
+  border-radius: 0 0 10px 10px;
+}
+
+.axis-card.dark { border-top: 3px solid var(--b20); }
+
+.axis-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.axis-icon { font-size: 20px; }
+
+.axis-title {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--b50);
+}
+
+.axis-card.dark .axis-title { color: var(--white); }
+
+.axis-list { list-style: none; display: flex; flex-direction: column; }
+
+.axis-list li {
+  font-size: 13px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--b01);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  line-height: 1.55;
+  color: var(--b50);
+}
+
+.axis-card.dark .axis-list li {
+  color: var(--b01);
+  border-bottom-color: rgba(255,255,255,.1);
+}
+
+.axis-list li:last-child { border-bottom: none; }
+
+.axis-list li::before {
+  content: '—';
+  color: var(--b20);
+  flex-shrink: 0;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.axis-card.dark .axis-list li::before { color: var(--b30); }
+
+.axis-note {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--b30);
+  margin-top: 20px;
+  letter-spacing: .02em;
+}
+
+/* ── CAUSE ── */
+.cause-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--b10);
+  border: 1px solid var(--b10);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+@media (max-width: 520px) { .cause-grid { grid-template-columns: 1fr; } }
+
+.cause-item {
+  background: var(--white);
+  padding: 28px 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: background .15s;
+}
+
+.cause-item:hover { background: var(--b01); }
+
+.cause-ico { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+
+.cause-t { font-weight: 700; font-size: 14px; color: var(--b50); margin-bottom: 6px; }
+.cause-d { font-size: 13px; color: var(--b30); line-height: 1.65; }
+
+/* ── FILM CARDS ── */
+.film-list { display: flex; flex-direction: column; gap: 16px; }
+
+.film-card {
+  background: var(--white);
+  border: 1px solid var(--b10);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(13,35,71,.06);
+}
+
+.film-header {
+  background: var(--b50);
+  color: var(--white);
+  padding: 18px 26px;
+}
+
+.film-name {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.film-meta {
+  font-size: 11px;
+  color: var(--b20);
+  margin-top: 3px;
+  letter-spacing: .04em;
+}
+
+.prop-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  border-bottom: 1px solid var(--b01);
+}
+
+.prop-row:last-child { border-bottom: none; }
+
+@media (max-width: 500px) { .prop-row { grid-template-columns: 1fr; } }
+
+.prop-key {
+  padding: 16px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--b30);
+  background: var(--b00);
+  border-right: 1px solid var(--b01);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 500px) {
+  .prop-key { border-right: none; border-bottom: 1px solid var(--b01); padding: 12px 20px; }
+}
+
+.prop-val {
+  padding: 16px 22px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--b50);
+}
+
+/* ── CONCLUSION ── */
+.conclusion {
+  background: var(--b60);
+  color: var(--white);
+  padding: 80px 24px;
+  text-align: center;
+}
+
+.conclusion-label {
+  font-size: 10.5px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--b30);
+  margin-bottom: 26px;
+}
+
+.conclusion-quote {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(18px, 3vw, 27px);
+  font-weight: 700;
+  line-height: 1.65;
+  max-width: 580px;
+  margin: 0 auto 28px;
+  color: var(--white);
+}
+
+.conclusion-body {
+  font-size: 13.5px;
+  color: var(--b30);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.9;
+}
+
+.conclusion-body strong { color: var(--b20); font-weight: 600; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--b00);
+  text-align: center;
+  padding: 24px;
+  font-size: 11.5px;
+  color: var(--b20);
+  letter-spacing: .06em;
+  border-top: 1px solid var(--b10);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">Film Studies · 영화미술 연구</div>
+  <h1>현대 영화에서 소품은 어떻게<br><mark>현실성</mark>과 <mark>상징성</mark>을 동시에 강화하는가</h1>
+  <p>기생충 · 인셉션 · 헤어질 결심을 중심으로</p>
+</header>
+
+<!-- 01 -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">
+      <span class="sec-num">01</span>
+      <span class="sec-title">소품(Props)이란 무엇인가</span>
+    </div>
+
+    <div class="def-box">
+      <strong>Props(Properties)</strong>란 배우가 직접 다루거나 장면에 배치되어 서사에 기여하는 모든 물리적 오브제다. 단순한 배경 장식이 아니라 캐릭터의 내면·관계·시대 맥락·주제의식을 시각 언어로 구현하는 핵심 영화미술 요소다. 말 한마디 없이 인물의 계급·욕망·결핍을 드러낼 수 있다는 점에서, 잘 설계된 소품은 대사보다 강력한 서사 도구가 되기도 한다.
+    </div>
+
+    <div class="role-grid">
+      <div class="role-item">
+        <span class="role-icon">🎭</span>
+        <div class="role-name">캐릭터 외화</div>
+        <div class="role-desc">심리와 내면을 눈에 보이는 형태로 물질화</div>
+      </div>
+      <div class="role-item">
+        <span class="role-icon">🌍</span>
+        <div class="role-name">세계관 구축</div>
+        <div class="role-desc">시대·계층·문화를 생활 디테일로 구현</div>
+      </div>
+      <div class="role-item">
+        <span class="role-icon">🔗</span>
+        <div class="role-name">서사 연결</div>
+        <div class="role-desc">반복 등장하는 오브제로 장면을 연결</div>
+      </div>
+      <div class="role-item">
+        <span class="role-icon">💡</span>
+        <div class="role-name">주제 응축</div>
+        <div class="role-desc">영화 전체 테마를 하나의 사물에 집약</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">
+      <span class="sec-num">02</span>
+      <span class="sec-title">과거 vs 현대 소품 활용 비교</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>과거 (1950s–1990s)</th>
+            <th>현대 (2000s–현재)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>목적</td>
+            <td class="td-old">장르 관습 강화, 명확한 상징 전달</td>
+            <td class="td-new">현실감 + 상징의 동시 구현</td>
+          </tr>
+          <tr>
+            <td>스타일</td>
+            <td class="td-old">과장되고 도식적, 눈에 띄는 배치</td>
+            <td class="td-new">생활감 있고 서사에 자연스럽게 녹아듦</td>
+          </tr>
+          <tr>
+            <td>제작 방식</td>
+            <td class="td-old">스튜디오 세트 중심</td>
+            <td class="td-new">실제 로케이션 + 소품 전문팀</td>
+          </tr>
+          <tr>
+            <td>관객 기대</td>
+            <td class="td-old">이야기 전달 자체에 집중</td>
+            <td class="td-new">디테일 하나하나에 높은 기대치</td>
+          </tr>
+          <tr>
+            <td>상징 방식</td>
+            <td class="td-old">직접적·노골적 (인물이 설명)</td>
+            <td class="td-new">은유적·다층적 (관객 스스로 해석)</td>
+          </tr>
+          <tr>
+            <td>시청 환경</td>
+            <td class="td-old">극장 대형 화면, 1회성 관람</td>
+            <td class="td-new">OTT 근거리 시청, 반복·정지 가능</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">
+      <span class="sec-num">03</span>
+      <span class="sec-title">현실성 vs 상징성 — 두 축의 동시 추구</span>
+    </div>
+
+    <div class="axis-wrap">
+      <div class="axis-card axis-top">
+        <div class="axis-head">
+          <span class="axis-icon">🔵</span>
+          <span class="axis-title">현실성 강화</span>
+        </div>
+        <ul class="axis-list">
+          <li>낡은 냉장고 자석, 구겨진 영수증</li>
+          <li>반쯤 마신 커피잔, 지저분한 식탁</li>
+          <li>계절감이 담긴 옷차림과 소지품</li>
+          <li>직업에 맞는 도구와 소품</li>
+          <li>설득력 있는 브랜드와 패키지</li>
+        </ul>
+      </div>
+      <div class="axis-card dark">
+        <div class="axis-head">
+          <span class="axis-icon">🌀</span>
+          <span class="axis-title">상징성 강화</span>
+        </div>
+        <ul class="axis-list">
+          <li>반복 등장하며 의미가 누적되는 오브제</li>
+          <li>캐릭터 욕망·결핍을 물질로 외화</li>
+          <li>장면마다 맥락이 바뀌는 다층적 아이템</li>
+          <li>색·형태·소재로 주제를 암시하는 선택</li>
+          <li>영화 전체를 관통하는 모티프</li>
+        </ul>
+      </div>
+    </div>
+    <p class="axis-note">✦ 최고의 소품은 두 가지를 동시에 달성한다 — 현실감 속에 상징이 자연스럽게 녹아든다</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">
+      <span class="sec-num">04</span>
+      <span class="sec-title">변화를 이끈 원인들</span>
+    </div>
+
+    <div class="cause-grid">
+      <div class="cause-item">
+        <div class="cause-ico">📱</div>
+        <div>
+          <div class="cause-t">OTT 플랫폼 확산</div>
+          <div class="cause-d">Netflix·Disney+ 확산으로 정지 캡처와 반복 시청이 일상화. 소품 하나가 분석·토론의 대상이 됨.</div>
+        </div>
+      </div>
+      <div class="cause-item">
+        <div class="cause-ico">🔍</div>
+        <div>
+          <div class="cause-t">능동적 관객 문화</div>
+          <div class="cause-d">SNS·유튜브 영화 해설 채널 정착. 관객이 숨겨진 의미를 직접 찾아 즐기는 문화 형성.</div>
+        </div>
+      </div>
+      <div class="cause-item">
+        <div class="cause-ico">🎬</div>
+        <div>
+          <div class="cause-t">영화미술의 전문화</div>
+          <div class="cause-d">Props Master, Set Decorator 등 역할 세분화. 소품 고증과 의미 설계에 전담팀 투입.</div>
+        </div>
+      </div>
+      <div class="cause-item">
+        <div class="cause-ico">📷</div>
+        <div>
+          <div class="cause-t">리얼리즘 트렌드</div>
+          <div class="cause-d">로케이션 촬영 확대, 다큐멘터리 미학 부상. 실제 공간이 주는 생활 디테일이 표준이 됨.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">
+      <span class="sec-num">05</span>
+      <span class="sec-title">실제 영화 사례 분석</span>
+    </div>
+
+    <div class="film-list">
+
+      <div class="film-card">
+        <div class="film-header">
+          <div class="film-name">기생충</div>
+          <div class="film-meta">봉준호 · 2019 · 칸 영화제 황금종려상</div>
+        </div>
+        <div>
+          <div class="prop-row">
+            <div class="prop-key">🪨 수석(돌)</div>
+            <div class="prop-val">계급 상승 욕망의 상징이자 최후에는 폭력의 도구. 자연물이 인간의 탐욕과 충돌하는 아이러니를 하나의 사물에 응축.</div>
+          </div>
+          <div class="prop-row">
+            <div class="prop-key">🏠 반지하 살림</div>
+            <div class="prop-val">낡은 가재도구, 좁은 창문으로 빈곤을 사실적으로 구현하면서 동시에 계급의 시각적 메타포로 기능.</div>
+          </div>
+          <div class="prop-row">
+            <div class="prop-key">🍑 복숭아털</div>
+            <div class="prop-val">계략의 물리적 매개. 알레르기라는 신체 반응을 통해 계급 간 보이지 않는 경계를 물질화.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="film-card">
+        <div class="film-header">
+          <div class="film-name">인셉션</div>
+          <div class="film-meta">크리스토퍼 놀란 · 2010</div>
+        </div>
+        <div>
+          <div class="prop-row">
+            <div class="prop-key">🌀 팽이 토템</div>
+            <div class="prop-val">현실과 꿈을 판별하는 유일한 기준점. 영화 전체의 철학적 질문을 단 하나의 사물에 집약.</div>
+          </div>
+          <div class="prop-row">
+            <div class="prop-key">💍 웨딩링</div>
+            <div class="prop-val">코브가 꿈 속에서만 착용하는 반지. 죄의식과 현실 집착을 드러내는 무의식의 외화.</div>
+          </div>
+          <div class="prop-row">
+            <div class="prop-key">🎲 각자의 토템</div>
+            <div class="prop-val">인물마다 다른 토템으로 "주관적 현실 인식"을 구체화. 소품이 캐릭터 철학 자체가 됨.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="film-card">
+        <div class="film-header">
+          <div class="film-name">헤어질 결심</div>
+          <div class="film-meta">박찬욱 · 2022 · 칸 영화제 감독상</div>
+        </div>
+        <div>
+          <div class="prop-row">
+            <div class="prop-key">📲 스마트폰·앱</div>
+            <div class="prop-val">디지털 감시와 욕망을 담은 현대적 소품. 고전 누아르의 테마를 21세기 언어로 재해석.</div>
+          </div>
+          <div class="prop-row">
+            <div class="prop-key">🐟 생선 요리</div>
+            <div class="prop-val">두 인물이 음식을 나누는 장면들. 관계 변화의 온도를 생활 소품으로 섬세하게 추적.</div>
+          </div>
+          <div class="prop-row">
+            <div class="prop-key">🔊 번역 앱 음성</div>
+            <div class="prop-val">언어 장벽과 오해를 기계 목소리로 전달. 소통의 불완전함과 욕망의 간극을 동시에 표현.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="conclusion">
+  <div class="conclusion-label">Conclusion · 결론</div>
+  <div class="conclusion-quote">"보이지 않는 듯 존재하면서,<br>다시 보면 모든 것을 말하는 소품"</div>
+  <div class="conclusion-body">
+    현대 영화의 소품은 <strong>현실성과 상징성을 대립이 아닌 융합</strong>으로 다룬다. OTT 시대 관객의 능동적 해석 문화와 영화미술의 전문화가 만나, 소품은 이제 서사의 부속품이 아닌 그 자체로 완결된 영화 언어가 되었다.
+  </div>
+</div>
+
+<footer>Film Studies Research · 영화미술과 소품의 진화</footer>
+
+</body>
+</html>
