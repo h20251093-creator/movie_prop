@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROP × SYMBOL × INDUSTRY</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy-950: #080c18;
+    --navy-900: #0f172a;
+    --navy-800: #1e2d4a;
+    --navy-700: #1d3461;
+    --accent: #2563eb;
+    --accent-hover: #3b82f6;
+    --white: #ffffff;
+    --slate-400: #94a3b8;
+    --slate-300: #cbd5e1;
+    --border: rgba(255,255,255,0.07);
+    --card-bg: rgba(255,255,255,0.03);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy-950);
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(8,12,24,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800; font-size: 1rem;
+    letter-spacing: 0.2em; color: var(--white);
+    text-decoration: none; text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: var(--slate-400); text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  /* ─── HERO ────────────────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37,99,235,0.18) 0%, transparent 70%),
+      radial-gradient(circle at 85% 80%, rgba(37,99,235,0.08) 0%, transparent 40%),
+      var(--navy-950);
+    overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600;
+    background: rgba(37,99,235,0.1);
+    border: 1px solid rgba(37,99,235,0.3);
+    padding: 6px 16px; border-radius: 100px; margin-bottom: 32px;
+    position: relative; z-index: 1;
+  }
+  .hero-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    position: relative; z-index: 1;
+    margin-bottom: 12px;
+  }
+  .hero-title span { color: var(--accent); }
+  .hero-sub {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    font-weight: 300;
+    color: var(--slate-400);
+    max-width: 600px;
+    margin: 16px auto 48px;
+    position: relative; z-index: 1;
+    letter-spacing: 0.01em;
+  }
+  .hero-visual {
+    display: flex; align-items: center; gap: 0;
+    position: relative; z-index: 1; margin-bottom: 60px;
+  }
+  .hero-prop-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    text-align: center;
+    min-width: 140px;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  .hero-prop-card:hover {
+    border-color: rgba(37,99,235,0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 0 40px rgba(37,99,235,0.12);
+  }
+  .hero-prop-icon { font-size: 2.4rem; margin-bottom: 8px; }
+  .hero-prop-label {
+    font-size: 0.65rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--slate-400);
+    margin-top: 4px;
+  }
+  .hero-arrow {
+    color: var(--accent); font-size: 1.4rem;
+    padding: 0 16px; opacity: 0.7;
+  }
+  .scroll-hint {
+    position: absolute; bottom: 36px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--slate-400); font-size: 0.7rem; letter-spacing: 0.15em;
+    text-transform: uppercase; animation: bounce 2s infinite;
+    z-index: 1;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  /* ─── SECTIONS ────────────────────────────────────── */
+  section {
+    padding: 100px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before {
+    content: ''; display: block;
+    width: 24px; height: 1px; background: var(--accent);
+  }
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800; letter-spacing: -0.02em;
+    line-height: 1.15; margin-bottom: 16px;
+  }
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0;
+  }
+
+  /* ─── CONCEPT ─────────────────────────────────────── */
+  #concept { padding-top: 80px; }
+  .concept-flow {
+    display: flex; align-items: stretch; gap: 0;
+    margin-top: 56px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .concept-step {
+    flex: 1;
+    padding: 48px 36px;
+    text-align: center;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .concept-step:hover { background: rgba(37,99,235,0.05); }
+  .concept-step + .concept-step {
+    border-left: 1px solid var(--border);
+  }
+  .concept-step-num {
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 20px;
+  }
+  .concept-icon {
+    width: 64px; height: 64px;
+    background: rgba(37,99,235,0.1);
+    border: 1px solid rgba(37,99,235,0.2);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.8rem;
+  }
+  .concept-step h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem; font-weight: 700; margin-bottom: 10px;
+  }
+  .concept-step p {
+    font-size: 0.82rem; color: var(--slate-400); line-height: 1.7;
+  }
+  .concept-arrow-wrap {
+    display: flex; align-items: center; padding: 0;
+    color: var(--accent); font-size: 1.2rem; opacity: 0.5;
+  }
+
+  /* ─── CASE STUDY ──────────────────────────────────── */
+  .case-wrapper {
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 60px; padding-right: 60px;
+  }
+  .case-header {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 40px;
+    margin-bottom: 56px;
+  }
+  .case-meta { flex: 1; }
+  .case-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--slate-400);
+    border: 1px solid var(--border);
+    padding: 5px 14px; border-radius: 100px; margin-bottom: 16px;
+  }
+  .case-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900; letter-spacing: -0.03em; line-height: 1;
+  }
+  .case-title span { color: var(--accent); }
+  .case-tagline {
+    color: var(--slate-400); font-size: 0.9rem;
+    margin-top: 12px; max-width: 400px;
+  }
+  .case-year {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(4rem, 8vw, 7rem);
+    font-weight: 900; letter-spacing: -0.05em;
+    color: rgba(255,255,255,0.04);
+    line-height: 1; white-space: nowrap;
+  }
+
+  .props-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  .prop-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .prop-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .prop-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(37,99,235,0.3);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.4), 0 0 30px rgba(37,99,235,0.08);
+  }
+  .prop-card:hover::before { opacity: 1; }
+  .prop-emoji { font-size: 2.4rem; margin-bottom: 16px; }
+  .prop-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;
+  }
+  .prop-movie {
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .prop-symbol {
+    font-size: 0.82rem; color: var(--slate-300); line-height: 1.65;
+    margin-bottom: 20px;
+  }
+  .prop-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .tag {
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 6px;
+    background: rgba(37,99,235,0.1);
+    border: 1px solid rgba(37,99,235,0.2);
+    color: var(--accent-hover);
+  }
+
+  .industry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .industry-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 20px;
+    display: flex; flex-direction: column; gap: 10px;
+    transition: all 0.25s ease;
+  }
+  .industry-card:hover {
+    border-color: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+  }
+  .industry-icon {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .industry-label {
+    font-size: 0.78rem; font-weight: 600; color: var(--white);
+  }
+  .industry-desc {
+    font-size: 0.72rem; color: var(--slate-400); line-height: 1.6;
+  }
+
+  .section-sub {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--slate-400); margin: 40px 0 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-sub::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ─── INSIGHT ─────────────────────────────────────── */
+  #insight {
+    border-top: 1px solid var(--border);
+  }
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .insight-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 32px;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .insight-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(37,99,235,0.4);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 40px rgba(37,99,235,0.1);
+  }
+  .insight-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 4rem; font-weight: 900;
+    color: rgba(37,99,235,0.15);
+    line-height: 1; margin-bottom: 20px;
+    letter-spacing: -0.04em;
+  }
+  .insight-icon {
+    width: 52px; height: 52px;
+    background: rgba(37,99,235,0.12);
+    border: 1px solid rgba(37,99,235,0.25);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 20px;
+  }
+  .insight-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem; font-weight: 700; margin-bottom: 10px;
+  }
+  .insight-desc {
+    font-size: 0.82rem; color: var(--slate-400); line-height: 1.7;
+  }
+
+  /* ─── CONCLUSION ──────────────────────────────────── */
+  #conclusion {
+    padding: 100px 60px;
+    text-align: center;
+    position: relative;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 100%, rgba(37,99,235,0.14) 0%, transparent 70%),
+      var(--navy-950);
+    max-width: 100%;
+    border-top: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .conclusion-inner { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+  .conclusion-icon {
+    width: 72px; height: 72px;
+    background: rgba(37,99,235,0.12);
+    border: 1px solid rgba(37,99,235,0.3);
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 32px;
+    box-shadow: 0 0 40px rgba(37,99,235,0.2);
+  }
+  .conclusion-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 900; letter-spacing: -0.03em;
+    line-height: 1.1; margin-bottom: 24px;
+  }
+  .conclusion-title span { color: var(--accent); }
+  .conclusion-sub {
+    font-size: 0.9rem; color: var(--slate-400);
+    line-height: 1.8; max-width: 560px; margin: 0 auto 48px;
+  }
+  .conclusion-stats {
+    display: flex; justify-content: center; gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    background: var(--card-bg);
+  }
+  .stat-item {
+    flex: 1; padding: 28px 20px; text-align: center;
+    border-right: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item:hover { background: rgba(37,99,235,0.06); }
+  .stat-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem; font-weight: 900; color: var(--white);
+    display: block; margin-bottom: 4px;
+  }
+  .stat-label {
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--slate-400);
+  }
+
+  /* ─── FOOTER ──────────────────────────────────────── */
+  footer {
+    padding: 32px 60px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--navy-950);
+  }
+  .footer-logo {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800; font-size: 0.85rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--white);
+  }
+  .footer-copy {
+    font-size: 0.72rem; color: var(--slate-400);
+  }
+
+  /* ─── ANIMATIONS ──────────────────────────────────── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ──────────────────────────────────── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section, .case-wrapper { padding: 64px 24px; }
+    .concept-flow { flex-direction: column; }
+    .concept-step + .concept-step { border-left: none; border-top: 1px solid var(--border); }
+    .insight-grid { grid-template-columns: 1fr; }
+    .case-header { flex-direction: column; gap: 16px; }
+    .case-year { font-size: 5rem; }
+    #conclusion { padding: 80px 24px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
+    .conclusion-stats { flex-direction: column; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .stat-item:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Prop × Industry</a>
+  <ul class="nav-links">
+    <li><a href="#concept">개념</a></li>
+    <li><a href="#inception">인셉션</a></li>
+    <li><a href="#marvel">마블</a></li>
+    <li><a href="#insight">인사이트</a></li>
+    <li><a href="#conclusion">결론</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-eyebrow">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    Film Props Research 2025
+  </div>
+  <h1 class="hero-title">소품이<br><span>상징</span>이 되고<br>산업이 된다</h1>
+  <p class="hero-sub">영화 속 오브제가 어떻게 브랜드·굿즈·팬덤 문화로 확장되는가</p>
+  <div class="hero-visual">
+    <div class="hero-prop-card">
+      <div class="hero-prop-icon">🎬</div>
+      <div class="hero-prop-label">Film Prop</div>
+    </div>
+    <div class="hero-arrow">→</div>
+    <div class="hero-prop-card">
+      <div class="hero-prop-icon">⚡</div>
+      <div class="hero-prop-label">Symbol</div>
+    </div>
+    <div class="hero-arrow">→</div>
+    <div class="hero-prop-card">
+      <div class="hero-prop-icon">🏭</div>
+      <div class="hero-prop-label">Industry</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    Scroll
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONCEPT -->
+<section id="concept" class="fade-up">
+  <div class="section-label">Framework</div>
+  <h2 class="section-title">소품 → 상징 → 산업 확장<br>3단계 구조</h2>
+  <div class="concept-flow">
+    <div class="concept-step">
+      <div class="concept-step-num">Stage 01</div>
+      <div class="concept-icon">🎭</div>
+      <h3>Film Prop</h3>
+      <p>영화 속 물리적 오브제.<br>감독의 의도와 내러티브를<br>담은 시각적 장치.</p>
+    </div>
+    <div class="concept-step">
+      <div class="concept-step-num">Stage 02</div>
+      <div class="concept-icon">🔮</div>
+      <h3>Symbol</h3>
+      <p>반복 노출과 서사 맥락으로<br>관객의 집단 기억에 각인.<br>추상 개념의 구체화.</p>
+    </div>
+    <div class="concept-step">
+      <div class="concept-step-num">Stage 03</div>
+      <div class="concept-icon">📈</div>
+      <h3>Cultural Capital</h3>
+      <p>상징이 공유 문화로 전환.<br>SNS·밈·굿즈·브랜드로<br>경제적 가치를 창출.</p>
+    </div>
+    <div class="concept-step">
+      <div class="concept-step-num">Stage 04</div>
+      <div class="concept-icon">🌐</div>
+      <h3>Industry Expansion</h3>
+      <p>팬덤 소비·라이선싱·<br>브랜드 아이덴티티로<br>엔터테인먼트 산업 재편.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CASE 1: INCEPTION -->
+<div class="case-wrapper fade-up" id="inception">
+  <div class="case-header">
+    <div class="case-meta">
+      <div class="case-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+        Case Study 01
+      </div>
+      <h2 class="case-title">INCEP<span>TION</span></h2>
+      <p class="case-tagline">크리스토퍼 놀란, 2010 · 꿈과 현실의 경계를 묻다</p>
+    </div>
+    <div class="case-year">2010</div>
+  </div>
+
+  <div class="props-grid">
+    <div class="prop-card">
+      <div class="prop-emoji">🌀</div>
+      <div class="prop-name">팽이 (Totem)</div>
+      <div class="prop-movie">Inception · 인셉션</div>
+      <div class="prop-symbol">현실 판별의 유일한 수단. 멈추면 현실, 돌면 꿈. 관객에게 존재론적 불안을 내면화시킨 오브제. 엔딩의 팽이가 멈추지 않음으로써 "정답 없음"이라는 열린 서사를 구성.</div>
+      <div class="prop-tags">
+        <span class="tag">Reality / Dream</span>
+        <span class="tag">Epistemology</span>
+        <span class="tag">Open Ending</span>
+      </div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-emoji">💍</div>
+      <div class="prop-name">Totem 개념 전체</div>
+      <div class="prop-movie">Inception · 개인 상징물</div>
+      <div class="prop-symbol">각 인물이 현실 감각을 유지하기 위해 소지하는 고유 오브제. 정체성과 자아 인식의 물리적 앵커로 기능. 팽이 외에도 레오나르도 디카프리오가 착용한 반지 등.</div>
+      <div class="prop-tags">
+        <span class="tag">Identity</span>
+        <span class="tag">Self-Awareness</span>
+        <span class="tag">Personal Object</span>
+      </div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-emoji">🏙️</div>
+      <div class="prop-name">접히는 도시 (Paris)</div>
+      <div class="prop-movie">Inception · 꿈 레이어 시각화</div>
+      <div class="prop-symbol">꿈 안에서 물리법칙이 붕괴하는 공간 표현. 도시가 180도 접히는 장면은 영화사 최고의 시각적 소품 중 하나로, "꿈의 건축"이라는 메타포를 완성.</div>
+      <div class="prop-tags">
+        <span class="tag">Dream Architecture</span>
+        <span class="tag">Gravity</span>
+        <span class="tag">Visual Metaphor</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-sub">산업 확장 분석</div>
+  <div class="industry-grid">
+    <div class="industry-card">
+      <div class="industry-icon">🌀</div>
+      <div class="industry-label">밈 & 인터넷 문화</div>
+      <div class="industry-desc">엔딩 팽이 장면은 전 세계 SNS에서 "현실인가 꿈인가" 논쟁 밈으로 10년 이상 재생산됨. Reddit·Twitter 철학 토론의 기원.</div>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">🛍️</div>
+      <div class="industry-label">굿즈 시장</div>
+      <div class="industry-desc">팽이 레플리카 굿즈는 금속 정밀 가공 버전부터 3D 프린팅까지. Etsy·Amazon에서 수천 개 리뷰의 베스트셀러 아이템.</div>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">📚</div>
+      <div class="industry-label">철학 콘텐츠</div>
+      <div class="industry-desc">데카르트 "나는 생각한다" 철학, 뇌-속-통 사고실험과 연계된 유튜브 해석 영상 수백만 뷰. 팝 철학의 아이콘.</div>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">🎮</div>
+      <div class="industry-label">게임 & 미디어 레퍼런스</div>
+      <div class="industry-desc">"꿈속의 꿈" 구조는 게임(Control, Alan Wake 2) 스토리텔링에 직접 인용. 레이어드 서사의 표준 문법화.</div>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">🏗️</div>
+      <div class="industry-label">브랜드 아이덴티티</div>
+      <div class="industry-desc">Nolan의 영화 세계관 자체가 브랜드화. "놀란 영화"라는 기대 = 복잡한 서사 + 미장센. 감독 IP 브랜딩의 교과서.</div>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">🎓</div>
+      <div class="industry-label">교육 & 강연 콘텐츠</div>
+      <div class="industry-desc">영화학·철학·심리학 강의에서 정규 케이스스터디로 활용. "소품 하나가 철학적 담론을 만든다"는 사례의 원형.</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CASE 2: MARVEL -->
+<div class="case-wrapper fade-up" id="marvel">
+  <div class="case-header">
+    <div class="case-meta">
+      <div class="case-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Case Study 02
+      </div>
+      <h2 class="case-title">MAR<span>VEL</span></h2>
+      <p class="case-tagline">MCU, 2008–현재 · 소품이 브랜드 제국을 만들다</p>
+    </div>
+    <div class="case-year">MCU</div>
+  </div>
+
+  <div class="props-grid">
+    <div class="prop-card">
+      <div class="prop-emoji">🦾</div>
+      <div class="prop-name">아이언맨 슈트 (Mark Series)</div>
+      <div class="prop-movie">Iron Man · MCU</div>
+      <div class="prop-symbol">천재·억만장자·자수성가의 상징. 기술이 곧 영웅성이라는 아이덴티티를 시각화. Mark I의 조악함에서 Mark L의 나노기술까지, 성장 서사 자체가 소품에 담김.</div>
+      <div class="prop-tags">
+        <span class="tag">Technology = Power</span>
+        <span class="tag">Self-Made Hero</span>
+        <span class="tag">Identity Armor</span>
+      </div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-emoji">🛡️</div>
+      <div class="prop-name">캡틴 아메리카 방패</div>
+      <div class="prop-movie">Captain America · MCU</div>
+      <div class="prop-symbol">비브라늄이라는 가상 물질로 만든 원형 방패. 방어와 공격을 동시에 수행하는 역설적 무기. 미국의 이상(理想)·정의·희생의 시각적 응축체.</div>
+      <div class="prop-tags">
+        <span class="tag">Justice & Sacrifice</span>
+        <span class="tag">American Ideal</span>
+        <span class="tag">Vibranium Symbol</span>
+      </div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-emoji">🔱</div>
+      <div class="prop-name">인피니티 건틀렛</div>
+      <div class="prop-movie">Avengers · MCU</div>
+      <div class="prop-symbol">6개의 인피니티 스톤을 장착한 궁극의 소품. "손가락 한 번으로 우주의 절반을 소멸"이라는 서사적 무게. 파괴적 전능함의 메타포.</div>
+      <div class="prop-tags">
+        <span class="tag">Ultimate Power</span>
+        <span class="tag">Moral Dilemma</span>
+        <span class="tag">Pop Icon</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-sub">산업 확장 분석</div>
+  <div class="industry-grid">
+    <div class="industry-card">
+      <div class="industry-icon">💰</div>
+      <div class="industry-label">굿즈 시장 규모</div>
+      <div class="industry-desc">마블 머천다이징 연간 수익 $15억+ 추정. 슈트·방패 레플리카는 고가 컬렉터블 시장에서 $500~$5,000. 코스프레 산업의 핵심 아이템.</div>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">🎯</div>
+      <div class="industry-label">브랜드 아이덴티티화</div>
+      <div class="industry-desc">아크 원자로 로고, 방패 문양이 Marvel의 시각 언어로 정착. 영화 소품 → 브랜드 심볼로의 완벽한 전환. 로고 자체가 상품이 됨.</div>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">🤝</div>
+      <div class="industry-label">콜라보레이션</div>
+      <div class="industry-desc">아우디·삼성·LG·Nike와 MCU 소품 중심 공동 마케팅. "아이언맨이 선택한 기술 브랜드" 포지셔닝. 소품의 신뢰 전이 효과.</div>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">📱</div>
+      <div class="industry-label">SNS & 팬덤 문화</div>
+      <div class="industry-desc">"I am Iron Man" + 손가락 튕기기 밈, 방패 던지기 챌린지. 소품 동작 자체가 문화적 코드가 되어 수억 뷰 콘텐츠 생성.</div>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">🎠</div>
+      <div class="industry-label">테마파크 & 경험 경제</div>
+      <div class="industry-desc">Disney Avengers Campus에서 슈트·방패 실물 경험. "소품 체험"이 테마파크 핵심 IP로. 연간 수천만 명 방문. 경험 상품화의 정점.</div>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">👗</div>
+      <div class="industry-label">패션 & 라이프스타일</div>
+      <div class="industry-desc">H&M·Uniqlo 마블 컬렉션 글로벌 출시. 방패 패턴 의류·침구·스테이셔너리. 소품 디자인 언어가 일상 오브제로 침투.</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- INSIGHT -->
+<section id="insight" class="fade-up">
+  <div class="section-label">Key Findings</div>
+  <h2 class="section-title">핵심 인사이트</h2>
+  <div class="insight-grid">
+    <div class="insight-card">
+      <div class="insight-num">01</div>
+      <div class="insight-icon">🔗</div>
+      <div class="insight-title">상징 응축 효과</div>
+      <div class="insight-desc">단 하나의 소품이 영화 전체의 주제를 응축한다. 팽이 = 인셉션, 방패 = 캡틴 아메리카. 서사 없이도 소품만으로 세계관이 호출된다. 이것이 굿즈 소비의 심리적 근거.</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-num">02</div>
+      <div class="insight-icon">🔄</div>
+      <div class="insight-title">밈화 = 마케팅 무한 연장</div>
+      <div class="insight-desc">팬이 소품을 밈으로 재창조하면서 제작사 비용 없이 마케팅이 확장된다. 팽이 논쟁·핑거스냅 챌린지 등. 소품의 밈 전환 가능성이 IP 가치를 결정한다.</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-num">03</div>
+      <div class="insight-icon">💎</div>
+      <div class="insight-title">소품 → 럭셔리 컬렉터블</div>
+      <div class="insight-desc">스크린에서 쓰인 원본 소품은 경매에서 수억 원에 거래된다. 레플리카도 고정밀도일수록 고가 시장 형성. 소품이 "예술품"의 지위를 획득한 새로운 현상.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONCLUSION -->
+<section id="conclusion" style="max-width: 100%; padding: 100px 60px;">
+  <div class="conclusion-inner fade-up">
+    <div class="conclusion-icon">✦</div>
+    <h2 class="conclusion-title">소품은<br><span>산업의 언어</span>다</h2>
+    <p class="conclusion-sub">감독이 선택한 오브제 하나가 관객의 기억에 각인되고, 팬덤이 밈으로 전파하며, 기업이 브랜드로 승화시킨다. 21세기 엔터테인먼트 산업에서 소품은 더 이상 배경이 아니다—그것이 곧 제품이고, 마케팅이며, 문화다.</p>
+    <div class="conclusion-stats">
+      <div class="stat-item">
+        <span class="stat-num">$15B+</span>
+        <span class="stat-label">Marvel Merchandise</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">10yr+</span>
+        <span class="stat-label">팽이 밈 수명</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">3단계</span>
+        <span class="stat-label">소품 → 상징 → 산업</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">팬덤 재생산</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Prop × Symbol × Industry</span>
+  <span class="footer-copy">영화미술 & 엔터테인먼트 산업 연구 · 2025</span>
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Staggered hero animation
+  window.addEventListener('load', () => {
+    const heroEls = document.querySelectorAll('#hero .hero-eyebrow, #hero .hero-title, #hero .hero-sub, #hero .hero-visual');
+    heroEls.forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      setTimeout(() => {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 200 + i * 120);
+    });
+  });
+</script>
+</body>
+</html>
